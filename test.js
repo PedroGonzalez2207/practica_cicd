@@ -39,7 +39,7 @@ test("GET / responde correctamente", async () => {
 
     assert.equal(response.status, 200);
     assert.equal(body.status, "ok");
-    assert.equal(body.version, "1.0.0");
+    assert.equal(body.version, "2.0.0");
   } finally {
     await closeServer(server);
   }

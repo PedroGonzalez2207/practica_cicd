@@ -10,7 +10,7 @@ function requestHandler(req, res) {
       JSON.stringify({
         status: "ok",
         message: "Aplicación CI/CD funcionando",
-        version: "1.0.0",
+        version: "2.0.0",
       })
     );
 
