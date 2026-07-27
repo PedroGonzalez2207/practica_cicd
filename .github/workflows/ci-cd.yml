@@ -1,0 +1,51 @@
+name: CI-CD defectuoso
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-test:
+    name: Construir y probar
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Ejecutar pruebas
+        run: npm test
+
+  deploy:
+    name: Desplegar aplicación
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Mostrar inicio del despliegue
+        run: |
+          echo "ATENCION: el job deploy se está ejecutando"
+          echo "Commit que sería desplegado: ${{ github.sha }}"
+
+      - name: Construir imagen del release
+        run: docker build -t practica-cicd:${{ github.sha }} .
+
+      - name: Simular publicación
+        run: |
+          echo "Simulando docker push del commit ${{ github.sha }}"
+          echo "Simulando actualización del Deployment web-deployment"
+
+      - name: Confirmar defecto
+        run: echo "DEFECTO REPRODUCIDO: deploy se ejecutó sin depender de build-test"

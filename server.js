@@ -1,43 +1,21 @@
-const http = require("http");
+const { createServer } = require("./app");
 
-const PORT = process.env.PORT || 8080;
+const PORT = Number(process.env.PORT) || 8080;
+const HOST = "0.0.0.0";
 
-const server = http.createServer((req, res) => {
-  if (req.url === "/") {
-    res.writeHead(200, { "Content-Type": "application/json" });
+const server = createServer();
 
-    res.end(
-      JSON.stringify({
-        status: "ok",
-        message: "Aplicación CI/CD funcionando",
-        version: "1.0.0",
-      })
-    );
-
-    return;
-  }
-
-  if (req.url === "/health") {
-    res.writeHead(200, { "Content-Type": "application/json" });
-
-    res.end(
-      JSON.stringify({
-        status: "healthy",
-      })
-    );
-
-    return;
-  }
-
-  res.writeHead(404, { "Content-Type": "application/json" });
-
-  res.end(
-    JSON.stringify({
-      error: "Ruta no encontrada",
-    })
-  );
+server.listen(PORT, HOST, () => {
+  console.log(`Servidor escuchando en http://${HOST}:${PORT}`);
 });
 
-server.listen(PORT, "0.0.0.0", () => {
-  console.log(`Servidor escuchando en el puerto ${PORT}`);
-});
+function shutdown() {
+  console.log("Cerrando servidor...");
+
+  server.close(() => {
+    process.exit(0);
+  });
+}
+
+process.on("SIGTERM", shutdown);
+process.on("SIGINT", shutdown);
