@@ -48,4 +48,5 @@ jobs:
           echo "Simulando actualización del Deployment web-deployment"
 
       - name: Confirmar defecto
-        run: echo "DEFECTO REPRODUCIDO: deploy se ejecutó sin depender de build-test"
+        run: |
+            echo "DEFECTO REPRODUCIDO: deploy se ejecutó sin depender de build-test"
