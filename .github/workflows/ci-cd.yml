@@ -28,7 +28,9 @@ jobs:
 
   deploy:
     name: Desplegar aplicación
+    needs: build-test
     runs-on: ubuntu-latest
+    
 
     steps:
       - name: Descargar repositorio
