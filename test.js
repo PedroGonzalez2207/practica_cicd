@@ -53,7 +53,7 @@ test("GET /health indica que la aplicación está saludable", async () => {
     const body = await response.json();
 
     assert.equal(response.status, 200);
-    assert.equal(body.status, "unhealthy");
+    assert.equal(body.status, "healthy");
   } finally {
     await closeServer(server);
   }
